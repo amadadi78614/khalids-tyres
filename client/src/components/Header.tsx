@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Menu, X, Phone, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { APP_LOGO, APP_TITLE } from "@/const";
-import { useCart } from "@/contexts/CartContext";
-import CartSidebar from "@/components/CartSidebar";
+import { Button } from "./ui/button"; // Changed to sibling import
+import { useCart } from "../contexts/CartContext"; // Kept relative (check if folder is 'context' or 'contexts')
+import CartSidebar from "./CartSidebar"; // Changed to sibling import
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,9 +26,18 @@ export default function Header() {
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer">
-              <img src={APP_LOGO} alt={APP_TITLE} className="h-12 w-auto" />
+              {/* REPLACE THE APP BLOCK: Pointing to a static file in public folder */}
+              <img 
+                src="/logo.png" 
+                alt="Khalid's Tyres & Accessories" 
+                className="h-12 w-auto object-contain" 
+                onError={(e) => {
+                  // Fallback if image is missing (hides the broken image icon)
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
               <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-foreground">{APP_TITLE}</h1>
+                <h1 className="text-xl font-bold text-foreground">Khalid's Tyres & Accessories</h1>
                 <p className="text-xs text-muted-foreground">SA's Online Tire Shop</p>
               </div>
             </div>
